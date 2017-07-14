@@ -3,8 +3,15 @@ package com.example.android.pick;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -15,13 +22,51 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     private Button mTimeBtn;
     private Button mDateBtn;
 
+    private ListView listView;
+
+    private String[] fruits = {
+            "Apple",
+            "Banana",
+            "Cherry",
+            "Orange",
+            "Mango",
+            "Watermelon"
+    };
+
+    private String selectedWord = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        listView = (ListView) findViewById(R.id.listView);
         mTimeBtn = (Button)findViewById(R.id.time_pick);
         mDateBtn = (Button)findViewById(R.id.date_pick);
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, fruits);
+        listView.setAdapter(adapter);
+        //
+        registerForContextMenu(listView);
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("ContextMenu");
+        menu.add("Press Me to see Item's name");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        selectedWord = ((TextView) info.targetView).getText().toString();
+
+        Toast.makeText(this,"You have pressed " + selectedWord  ,Toast.LENGTH_LONG).show();
+        return true;
     }
 
     public void showTimePickDialog(View view) {
