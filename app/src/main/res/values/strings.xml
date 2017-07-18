@@ -2,4 +2,24 @@
     <string name="app_name">Pick</string>
     <string name="pick_time">pick_time</string>
     <string name="pick_date">pick_date</string>
+    <string name="descr_overflow_button">descr_overflow_button</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_archive">Archive</string>
+    <string name="menu_delete">Delete</string>
+    <string name="pref_sync">sync</string>
+    <string name="pref_sync_summ">pref_sync_summ</string>
+    <string name="pref_syncConnectionType">pref_syncConnectionType</string>
+    <string name="pref_syncConnectionTypes_default">pref_syncConnectionTypes_default</string>
+    <string name="pref_sms_storage_title">pref_sms_storage_title</string>
+    <string name="pref_summary_auto_delete">pref_summary_auto_delete</string>
+    <string name="pref_title_auto_delete">pref_title_auto_delete</string>
+    <string name="pref_summary_delete_limit">pref_summary_delete_limit</string>
+    <string name="pref_title_sms_delete">pref_title_sms_delete</string>
+    <string name="pref_title_mms_delete">pref_title_mms_delete</string>
+    <string name="voicemail">voicemail</string>
+    <string name="voicemail_provider">voicemail_provider</string>
+    <string name="voicemail_settings">voicemail_settings</string>
+    <string name="voicemail_ringtone_title">voicemail_ringtone_title</string>
+    <string name="settings">settings</string>
+    <string name="notification">notification</string>
 </resources>

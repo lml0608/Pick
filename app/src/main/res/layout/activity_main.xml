@@ -10,6 +10,22 @@
 
     <Button
 
+        android:id="@+id/notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notification"
+        android:onClick="showNotification"/>
+
+
+    <Button
+        android:id="@+id/setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings"
+        android:onClick="openSettings" />
+
+    <Button
+
         android:id="@+id/time_pick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,6 +39,14 @@
         android:layout_height="wrap_content"
         android:text="@string/pick_date"
         android:onClick="showDatePickerDialog" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:src="@drawable/ic_profile"
+        android:contentDescription="@string/descr_overflow_button"
+        android:onClick="showPopup" />
 
     <ListView
         android:layout_width="match_parent"
