@@ -13,10 +13,13 @@ import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,7 +30,9 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.R.attr.duration;
 import static android.R.attr.mode;
+import static android.os.Build.ID;
 
 public class MainActivity extends AppCompatActivity implements TimePickerFragment.CallBacks,
         DatePickerFragment.CallBacks,
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     };
 
     private String selectedWord = null;
+    private NotificationCompat.Builder mBuilder;
+    private NotificationManager mNotifyManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,7 +221,19 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
                 return true;
 
             case R.id.menu_archive:
-                Toast.makeText(MainActivity.this, "You have pressed1 " + selectedWord  ,Toast.LENGTH_LONG).show();
+
+
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.custom_toast_container, (ViewGroup) findViewById(R.id.custom_toast_container));
+
+                TextView text = (TextView)layout.findViewById(R.id.text);
+                text.setText("This is a custom toast");
+                Toast toast = Toast.makeText(MainActivity.this, "You have pressed1 " + selectedWord  ,Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                toast.setView(layout);
+
+
+                toast.show();
 
                 return true;
 
@@ -276,30 +295,46 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     }
 
+    public void showNotification1(View view) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setContentTitle("Picture Download")
+                .setContentText("Download in progress")
+                .setSmallIcon(R.drawable.ic_profile);
+// Start a lengthy operation in a background thread
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        int incr;
+                        // Do the "lengthy" operation 20 times
+                        for (incr = 0; incr <= 100; incr+=5) {
+                            // Sets the progress indicator to a max value, the
+                            // current completion percentage, and "determinate"
+                            // state
+                            mBuilder.setProgress(100, incr, false);
+                            // Displays the progress bar for the first time.
+                            mNotifyManager.notify(0, mBuilder.build());
+                            // Sleeps the thread, simulating an operation
+                            // that takes time
+                            try {
+                                // Sleep for 5 seconds
+                                Thread.sleep(5*1000);
+                            } catch (InterruptedException e) {
+                                Log.d(TAG, "sleep failure");
+                            }
+                        }
+                        // When the loop is finished, updates the notification
+                        mBuilder.setContentText("Download complete")
+                                // Removes the progress bar
+                                .setProgress(0,0,false);
+                        mNotifyManager.notify(5, mBuilder.build());
+                    }
+                }
+// Starts the thread by calling the run() method in its Runnable
+        ).start();
+    }
 
 
     //popup点击事件
